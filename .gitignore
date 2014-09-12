@@ -52,3 +52,16 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# MyTARDIS source tree
+mytardis
+
+# SSH authorized keys for the container
+authorized_keys
+
+# Data directories
+data
+dicom_tmp
+mytardis_staging
+mytardis_store
+var_log
