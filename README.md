@@ -102,4 +102,3 @@ Now go to http://localhost:8000 and you should see the default MyTARDIS front pa
 * Configure ingestion application
 * Apache or Nginx instead of django-runserver.
 * How to use command line interface.
-* pynetdicom to dump files on volume
