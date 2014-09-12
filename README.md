@@ -6,7 +6,9 @@ ImageTrove! Powered by MyTARDIS.
 
     TODO
 
-# Install Docker
+# Installation
+
+## Install Docker
 
 Follow the instructions at https://docs.docker.com/installation/#installation
 
@@ -25,20 +27,15 @@ check if AUFS is enabled by looking at the ```Storage Driver``` field:
     WARNING: No memory limit support
     WARNING: No swap limit support
 
-# Clone the ImageTrove and MyTARDIS repos
-
-ImageTrove:
+## Install ImageTrove
 
     git clone https://github.com/carlohamalainen/imagetrove
-
-MyTARDIS:
-
     cd imagetrove
     git clone git://github.com/carlohamalainen/mytardis.git # current dev fork; later will be git://github.com/mytardis/mytardis.git
     cd mytardis
     cd ..
 
-# Configuration
+## Configuration
 
 Look for ```CHANGEME``` in ```create_admin.py```,
 ```postgresql_first_run.sh```, and ```settings.py```.
@@ -47,11 +44,11 @@ To use AAF authentication you must register your service at https://rapid.aaf.ed
 For the purposes of testing you can use a plain ```http``` callback URL, but for production
 you need a ```https``` callback. So this means signed certificates.
 
-# Build the ImageTrove container
+## Build the ImageTrove container
 
     sudo docker build -t='user/imagetrove' .
 
-# Configure volumes
+## Configure volumes
 
 The container uses external volumes for persistent storage.
 
@@ -64,13 +61,29 @@ The container uses external volumes for persistent storage.
 Ideally ```mytardis_staging```, ```mytardis_store```, and
 ```dicom_tmp``` would be on the same file system.
 
-# Run the container
+## Configure DICOM modalities
+
+On your instrument, add the ImageTrove DICOM modality,
+which is a ```STORESCP``` server.  For example, to
+configure [Orthanc](http://orthanc-server.com/) add this to
+```Configuration.json```:
+
+    // The list of the known DICOM modalities
+    "DicomModalities" : {
+    "ImageTrove" : [ "STORESCP", "imagetrove.example.com", 5000 ]
+    },
+
+# Running ImageTrove
+
+Create directories for the persistent storage:
 
     mkdir -p /somewhere/mytardis_staging    \
              /somewhere/mytardis_store      \
              /somewhere/data                \
              /somewhere/var_log/supervisor  \
              /somewhere/dicom_tmp
+
+Run the container:
 
     sudo docker run -i -t --rm                              \
         -p 0.0.0.0:3022:22                                  \
@@ -82,22 +95,12 @@ Ideally ```mytardis_staging```, ```mytardis_store```, and
         -v /somewhere/dicom_tmp:/dicom_tmp                  \
         -P user/imagetrove
 
-# Configure network
-
-* pynetdicom
-
-# Configure DICOM server
-
-* TODO
-
-# Configure ingestion application
-
-* TODO
-* DICOM fields
-
+Now go to http://localhost:8000 and you should see the default MyTARDIS front page.
 
 # TODO - General
 
+* DICOM fields
+* Configure ingestion application
 * Apache or Nginx instead of django-runserver.
 * How to use command line interface.
 * pynetdicom to dump files on volume
