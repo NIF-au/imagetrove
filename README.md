@@ -65,8 +65,7 @@ Ideally ```mytardis_staging```, ```mytardis_store```, and
 
 On your instrument, add the ImageTrove DICOM modality,
 which is a ```STORESCP``` server.  For example, to
-configure [Orthanc](http://orthanc-server.com/) add this to
-```Configuration.json```:
+configure [Orthanc](http://orthanc-server.com/) add this to ```Configuration.json```:
 
     // The list of the known DICOM modalities
     "DicomModalities" : {
