@@ -96,7 +96,7 @@ Run the container:
 
 Now go to http://localhost:8000 and you should see the default MyTARDIS front page.
 
-# TODO - General
+# TODO
 
 * DICOM fields
 * Configure ingestion application
