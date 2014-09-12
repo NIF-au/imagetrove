@@ -27,7 +27,7 @@ check if AUFS is enabled by looking at the ```Storage Driver``` field:
     WARNING: No memory limit support
     WARNING: No swap limit support
 
-## Install ImageTrove
+## Clone ImageTrove
 
     git clone https://github.com/carlohamalainen/imagetrove
     cd imagetrove
