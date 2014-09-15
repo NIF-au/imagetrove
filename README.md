@@ -44,6 +44,12 @@ To use AAF authentication you must register your service at https://rapid.aaf.ed
 For the purposes of testing you can use a plain ```http``` callback URL, but for production
 you need a ```https``` callback. So this means signed certificates.
 
+Place your ssh public key in the file authorized_keys if you want easier connection to the container:
+
+    # In the imagetrove directory...
+    cat ~/.ssh/id_rsa.pub > authorized_keys
+    chmod 600 authorized_keys
+
 ## Build the ImageTrove container
 
     sudo docker build -t='user/imagetrove' .
@@ -95,6 +101,23 @@ Run the container:
         -P user/imagetrove
 
 Now go to http://localhost:8000 and you should see the default MyTARDIS front page.
+
+To ssh to the container:
+
+    ssh -t -o NoHostAuthenticationForLocalhost=yes -p 3022 root@localhost
+
+If you use ```$HOME/.ssh/config``` then this entry may be useful:
+
+    Host imagetrove-container
+        Hostname localhost
+        Port 3022
+        User root
+        NoHostAuthenticationForLocalhost yes
+        RequestTTY yes
+
+which lets one connect simply with
+
+    ssh imagetrove-container
 
 # TODO
 

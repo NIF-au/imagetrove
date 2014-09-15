@@ -12,11 +12,10 @@ RUN apt-get -qqy install python python-dev libpq-dev libssl-dev libsasl2-dev   \
                          pwgen libpq-dev python-dev python-software-properties \
                          software-properties-common python-psycopg2 pyflakes   \
                          tcsh make vim-gtk minc-tools python-pip               \
-                         redis-server python-redis python-requests
+                         redis-server python-redis python-requests             \
+                         inotify-tools daemontools
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qqy install postgresql postgresql-contrib
-
-RUN apt-get -qqy install inotify-tools daemontools
 
 # Python packages.
 RUN pip install pydicom
@@ -24,6 +23,21 @@ RUN pip install pynetdicom
 RUN pip install PyJWT
 RUN pip install PyCrypto
 RUN pip install pwgen
+
+# GHC and friends
+RUN apt-get -qqy install ghc ghc-prof ghc-haddock cabal-install happy alex
+WORKDIR /root
+ENV HOME /root
+RUN cabal update
+RUN cabal install cabal-install
+RUN echo 'export PATH=/root/.cabal/bin:$PATH' >> /root/.bashrc
+RUN cabal update
+RUN /root/.cabal/bin/cabal install ghc-mod-4.1.6
+
+# Cabal defaults.
+RUN sed -i 's/-- documentation: False/documentation: True/g'         /root/.cabal/config
+RUN sed -i 's/-- library-profiling: False/library-profiling: True/g' /root/.cabal/config
+RUN sed -i 's/-- jobs:/jobs: $ncpus/g'                               /root/.cabal/config
 
 # Clean up.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
