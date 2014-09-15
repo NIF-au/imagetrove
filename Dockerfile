@@ -24,6 +24,10 @@ RUN pip install PyJWT
 RUN pip install PyCrypto
 RUN pip install pwgen
 
+# Locale needs to be right for various Haskell packages.
+RUN sed -i 's/# en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/g' /etc/locale.gen
+RUN locale-gen
+
 # GHC and friends
 RUN apt-get -qqy install ghc ghc-prof ghc-haddock cabal-install happy alex
 WORKDIR /root
@@ -119,6 +123,9 @@ VOLUME ["/data", "/var/log", "/mytardis_store", "/mytardis_staging", "/dicom_tmp
 EXPOSE 22
 EXPOSE 5000
 EXPOSE 8000
+
+RUN mkdir /scratch
+VOLUME "/scratch"
 
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
 

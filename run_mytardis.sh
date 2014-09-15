@@ -15,6 +15,10 @@ setuidgid postgres createdb tardis || echo 'tardis database already exists'
 echo "[run] syncdb"
 ./bin/django syncdb --noinput --migrate
 
+./bin/django migrate || echo 'migrate failed, ignoring'
+./bin/django schemamigration tardis_portal --auto || echo 'schemamigration failed, ignoring'
+./bin/django migrate tardis_portal || echo 'migrate tardis_portal failed, ignoring'
+
 echo "[run] create_admin.py"
 python create_admin.py
 
