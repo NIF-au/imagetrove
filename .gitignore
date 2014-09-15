@@ -65,3 +65,4 @@ dicom_tmp
 mytardis_staging
 mytardis_store
 var_log
+scratch/*
