@@ -27,7 +27,7 @@ STAGING_PATH    = '/mytardis_staging'
 # Django places a temporary uploaded file here and then does a save_move
 # to the final name in FILE_STORE_PATH. So ideally the directories
 # FILE_UPLOAD_TEMP_DIR and FILE_STORE_PATH will be on the same file system.
-FILE_UPLOAD_TEMP_DIR = '/other'
+FILE_UPLOAD_TEMP_DIR = '/tmp'
 
 # Show the Rapid Connect login button.
 RAPID_CONNECT_ENABLED = True
