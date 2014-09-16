@@ -23,6 +23,7 @@ DATABASES['default']['PORT'] = ''
 
 FILE_STORE_PATH = '/mytardis_store'
 STAGING_PATH    = '/mytardis_staging'
+SYNC_TEMP_PATH = '/opt/mytardis/var/staging/'
 
 # Django places a temporary uploaded file here and then does a save_move
 # to the final name in FILE_STORE_PATH. So ideally the directories

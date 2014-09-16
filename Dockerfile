@@ -110,6 +110,7 @@ RUN         ./bin/buildout -c buildout-dev.cfg
 WORKDIR     /opt
 ADD         settings.py             /opt/mytardis/tardis/
 ADD         run_mytardis.sh         /opt/mytardis/
+ADD         run_celery.sh           /opt/mytardis/
 ADD         create_admin.py         /opt/mytardis/
 ADD         append_django_paths.py  /opt/mytardis/
 
