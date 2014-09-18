@@ -62,10 +62,10 @@ The container uses external volumes for persistent storage.
 * ```mytardis_store```: the final place that MyTARDIS stores data.
 * ```data```: postgresql database files.
 * ```var_log```: logfiles for supervisord, postgresql, mytardis, etc.
-* ```dicom_tmp```: temporary storage for the local DICOM server.
+* ```OrthancStorage```: storage for the Orthanc DICOM server.
 
 Ideally ```mytardis_staging```, ```mytardis_store```, and
-```dicom_tmp``` would be on the same file system.
+```OrthancStorage``` would be on the same file system.
 
 ## Configure DICOM modalities
 
@@ -86,18 +86,19 @@ Create directories for the persistent storage:
              /somewhere/mytardis_store      \
              /somewhere/data                \
              /somewhere/var_log/supervisor  \
-             /somewhere/dicom_tmp
+             /somewhere/OrthancStorage
 
 Run the container:
 
     sudo docker run -i -t --rm                              \
         -p 0.0.0.0:3022:22                                  \
         -p 0.0.0.0:8000:8000                                \
+        -p 0.0.0.0:5000:5000                                \
         -v /somewhere/mytardis_staging:/mytardis_staging    \
         -v /somewhere/mytardis_store:/mytardis_store        \
         -v /somewhere/data:/data                            \
         -v /somewhere/var_log:/var/log                      \
-        -v /somewhere/dicom_tmp:/dicom_tmp                  \
+        -v /somewhere/OrthancStorage:/OrthancStorage        \
         -P user/imagetrove
 
 Now go to http://localhost:8000 and you should see the default MyTARDIS front page.

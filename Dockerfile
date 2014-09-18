@@ -3,9 +3,9 @@ MAINTAINER  Carlo Hamalainen <c.hamalainen@uq.edu.au>
 
 # Update and install packages.
 ADD sources.list /etc/apt/sources.list
-RUN apt-get -qq update
-RUN apt-get -qqy dist-upgrade
-RUN apt-get -qqy install python python-dev libpq-dev libssl-dev libsasl2-dev   \
+RUN apt-get update
+RUN apt-get -y dist-upgrade
+RUN apt-get -y install python python-dev libpq-dev libssl-dev libsasl2-dev   \
                          libldap2-dev libxslt1.1 libxslt1-dev python-libxslt1  \
                          libexiv2-dev git libgraphviz-dev git ipython screen   \
                          htop imagemagick vim dcmtk openssh-server supervisor  \
@@ -13,9 +13,15 @@ RUN apt-get -qqy install python python-dev libpq-dev libssl-dev libsasl2-dev   \
                          software-properties-common python-psycopg2 pyflakes   \
                          tcsh make vim-gtk minc-tools python-pip               \
                          redis-server python-redis python-requests             \
-                         inotify-tools daemontools
+                         inotify-tools daemontools                             \
+                         python python-dev cmake mercurial git ipython screen htop vim  \
+                         build-essential unzip cmake mercurial                 \
+       	       	         uuid-dev libcurl4-openssl-dev liblua5.1-0-dev         \
+       	       	         libgoogle-glog-dev libgtest-dev libpng-dev            \
+       	       	         libsqlite3-dev libssl-dev zlib1g-dev libdcmtk2-dev    \
+                         libboost-all-dev libwrap0-dev libjsoncpp-dev
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qqy install postgresql postgresql-contrib
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql postgresql-contrib
 
 # Python packages.
 RUN pip install pydicom
@@ -42,9 +48,6 @@ RUN /root/.cabal/bin/cabal install ghc-mod-4.1.6
 RUN sed -i 's/-- documentation: False/documentation: True/g'         /root/.cabal/config
 RUN sed -i 's/-- library-profiling: False/library-profiling: True/g' /root/.cabal/config
 RUN sed -i 's/-- jobs:/jobs: $ncpus/g'                               /root/.cabal/config
-
-# Clean up.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Sane vim environment.
 RUN mkdir           /root/.vim
@@ -93,9 +96,9 @@ RUN touch /firstrun
 ADD supervisord.conf /etc/supervisord.conf
 
 # Pynetdicom
-ADD run_pynetdicom.sh      /opt/mytardis/
-ADD mytardisdicomserver.py /opt/mytardis/
-RUN chmod +x /opt/mytardis/run_pynetdicom.sh
+ADD run_mytardisdicomserver.sh   /opt/mytardis/
+ADD mytardisdicomserver.py       /opt/mytardis/
+RUN chmod +x /opt/mytardis/run_mytardisdicomserver.sh
 
 # Install MyTARDIS:
 RUN         mkdir -p /opt
@@ -117,13 +120,37 @@ ADD         append_django_paths.py  /opt/mytardis/
 WORKDIR     /opt/mytardis
 RUN         ln -s bin/django djangosettings.py
 
+RUN         rmdir /opt/mytardis/var/store
+RUN         ln -s /mytardis_store/ /opt/mytardis/var/store
+
+RUN         rmdir /opt/mytardis/var/staging
+RUN         ln -s /mytardis_staging/ /opt/mytardis/var/staging
+
 RUN mkdir /mytardis_store /mytardis_staging
 
-VOLUME ["/data", "/var/log", "/mytardis_store", "/mytardis_staging", "/dicom_tmp"]
+ADD         Orthanc-0.8.0.tar.gz /opt/
+
+RUN         mkdir /opt/orthanc
+WORKDIR     /opt/orthanc
+RUN         mkdir /OrthancStorage
+ADD         Configuration.json /opt/orthanc/
+RUN         cmake -DALLOW_DOWNLOADS=ON \
+                  -DUSE_SYSTEM_GOOGLE_LOG=OFF \
+                  -DUSE_SYSTEM_MONGOOSE=OFF \
+                  -DUSE_GTEST_DEBIAN_SOURCE_PACKAGE=ON \
+                  -DENABLE_JPEG=OFF \
+                  -DENABLE_JPEG_LOSSLESS=OFF \
+                  /opt/Orthanc-0.8.0
+RUN         make
+
+VOLUME ["/data", "/var/log", "/mytardis_store", "/mytardis_staging", "/OrthancStorage"]
 
 EXPOSE 22
 EXPOSE 5000
 EXPOSE 8000
+
+EXPOSE 8042
+EXPOSE 4242
 
 RUN mkdir /scratch
 VOLUME "/scratch"
