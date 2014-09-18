@@ -129,6 +129,7 @@ RUN         mkdir /opt/orthanc
 WORKDIR     /opt/orthanc
 RUN         mkdir /OrthancStorage
 ADD         Configuration.json /opt/orthanc/
+ADD         run_orthanc.sh     /opt/orthanc/
 RUN         cmake -DALLOW_DOWNLOADS=ON \
                   -DUSE_SYSTEM_GOOGLE_LOG=OFF \
                   -DUSE_SYSTEM_MONGOOSE=OFF \

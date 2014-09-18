@@ -1,1 +1,1 @@
-cd /opt/OrthancBuild && ./Orthanc ./Configuration.json --verbose
+cd /opt/orthanc && ./Orthanc ./Configuration.json --verbose
