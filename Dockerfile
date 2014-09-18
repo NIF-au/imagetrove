@@ -95,11 +95,6 @@ RUN touch /firstrun
 # Supervisord
 ADD supervisord.conf /etc/supervisord.conf
 
-# Pynetdicom
-ADD run_mytardisdicomserver.sh   /opt/mytardis/
-ADD mytardisdicomserver.py       /opt/mytardis/
-RUN chmod +x /opt/mytardis/run_mytardisdicomserver.sh
-
 # Install MyTARDIS:
 RUN         mkdir -p /opt
 WORKDIR     /opt
