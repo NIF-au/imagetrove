@@ -12,6 +12,12 @@ ImageTrove! Powered by MyTARDIS.
 
 Follow the instructions at https://docs.docker.com/installation/#installation
 
+By default Docker stores its images in ```/var/lib/docker``` so ensure that this
+directory is on a partition with sufficient free space. Check these settings in ```/etc/default/docker```:
+
+    DOCKER_OPTS="--graph=/mnt/bigdrive/docker"
+    export TMPDIR="/mnt/bigdrive/docker-tmp"
+
 While not necessary, running Docker with AUFS makes building containers much faster. You can
 check if AUFS is enabled by looking at the ```Storage Driver``` field:
 
@@ -37,14 +43,31 @@ check if AUFS is enabled by looking at the ```Storage Driver``` field:
 
 ## Configuration
 
+### Local settings
+
 Look for ```CHANGEME``` in ```create_admin.py```,
 ```postgresql_first_run.sh```, and ```settings.py```.
 
+### AAF authentication
+
 To use AAF authentication you must register your service at https://rapid.aaf.edu.au
 For the purposes of testing you can use a plain ```http``` callback URL, but for production
-you need a ```https``` callback. So this means signed certificates.
+you need a ```https``` callback.
 
-Place your ssh public key in the file authorized_keys if you want easier connection to the container:
+TODO Configuration of SSL certificates in the container.
+
+The callback URL is at ```/rc```, so in the test federation use
+
+    RAPID_CONNECT_CONFIG['aud'] = 'http://example.com/rc/'
+
+and in production,
+
+    RAPID_CONNECT_CONFIG['aud'] = 'https://example.com/rc/'
+
+### SSH access
+
+Place your ssh public key in the file authorized_keys if you want
+easier connection to the container:
 
     # In the imagetrove directory...
     cat ~/.ssh/id_rsa.pub > authorized_keys
