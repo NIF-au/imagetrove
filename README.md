@@ -87,7 +87,7 @@ easier connection to the container:
 
 ## DICOM modalities
 
-Each instrument must be specified in ```imagetrove_uploader.conf```. See [imagetrove_uploader.conf](imagetrove_uploader.conf).
+Each instrument must be specified in [imagetrove_uploader.conf](imagetrove_uploader.conf).
 
 The fields in each instrument block are:
 
