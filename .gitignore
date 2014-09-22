@@ -67,3 +67,4 @@ mytardis_store
 var_log
 scratch/*
 OrthancStorage/*
+*.swp
