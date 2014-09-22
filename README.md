@@ -3,9 +3,9 @@
 ImageTrove is a tool for ingesting and archiving NIF datasets. It is made up of a number of components:
 
 * PostgreSQL database.
-* Web front end: [MyTARDIS](http://mytardis.org/), written in [Django](https://www.djangoproject.com/).
-* DICOM server: [Orthanc](http://orthanc-server.com/)
-* Dataset uploader: [imagetrove-uploader](https://github.com/carlohamalainen/imagetrove)
+* Web front end: [MyTARDIS](http://mytardis.org/), a [Django](https://www.djangoproject.com/) application.
+* DICOM server: [Orthanc](http://orthanc-server.com/).
+* Dataset uploader: [imagetrove-uploader](https://github.com/carlohamalainen/imagetrove).
 * Federated authentication: end users log in to MyTARDIS using their institutional identity, which is verified by
   the Australian Access Federation's [Rapid Connect](https://rapid.aaf.edu.au) service.
 
