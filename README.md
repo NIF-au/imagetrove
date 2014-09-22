@@ -193,9 +193,16 @@ which lets one connect simply with
 
 ## Check ingested dataset
 
+    TODO
+
+## Log files
+
+    TODO
+
 # TODO
 
-* DICOM fields
+* Required DICOM fields
+* File mount ingestion
 * Configure ingestion application
 * Apache or Nginx instead of django-runserver.
 * How to use command line interface.
