@@ -83,26 +83,7 @@ easier connection to the container:
     cat ~/.ssh/id_rsa.pub > authorized_keys
     chmod 600 authorized_keys
 
-## Build the ImageTrove container
-
-    sudo docker build -t='user/imagetrove' .
-
-FIXME add wget of imagetrove-uploader binary
-
-## Configure volumes
-
-The container uses external volumes for persistent storage.
-
-* ```mytardis_staging```: the MyTARDIS staging directory.
-* ```mytardis_store```: the final place that MyTARDIS stores data.
-* ```data```: postgresql database files.
-* ```var_log```: logfiles for supervisord, postgresql, mytardis, etc.
-* ```OrthancStorage```: storage for the Orthanc DICOM server.
-
-Ideally ```mytardis_staging```, ```mytardis_store```, and
-```OrthancStorage``` would be on the same file system.
-
-## Configure DICOM modalities
+## DICOM modalities
 
 Each instrument must be specified in ```imagetrove_uploader.conf```. See FIXME for an example.
 
@@ -122,6 +103,34 @@ Correspondingly, each instrument needs to know the address of the
 ImageTrove DICOM server, which is a ```STORESCP``` server. By
 default this will be ```imagetrove.example.com:4242``` where ```imagetrove.example.com```
 is the main ImageTrove instance.
+
+## Network access
+
+Each instrument's DICOM server needs to be able to connect to the
+ImageTrove STORESCP server on port 4242.
+
+## Securing Orthanc
+
+TODO Add password access to web UI.
+
+## Build the ImageTrove container
+
+    sudo docker build -t='user/imagetrove' .
+
+FIXME add wget of imagetrove-uploader binary
+
+## Configure volumes
+
+The container uses external volumes for persistent storage.
+
+* ```mytardis_staging```: the MyTARDIS staging directory.
+* ```mytardis_store```: the final place that MyTARDIS stores data.
+* ```data```: postgresql database files.
+* ```var_log```: logfiles for supervisord, postgresql, mytardis, etc.
+* ```OrthancStorage```: storage for the Orthanc DICOM server.
+
+Ideally ```mytardis_staging```, ```mytardis_store```, and
+```OrthancStorage``` would be on the same file system.
 
 # Running ImageTrove
 
