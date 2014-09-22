@@ -19,7 +19,7 @@ The flow of data through the system is as follows:
 
 # Installation
 
-## Install Docker
+## Docker
 
 Follow the instructions at https://docs.docker.com/installation/#installation
 
@@ -44,7 +44,9 @@ check if AUFS is enabled by looking at the ```Storage Driver``` field:
     WARNING: No memory limit support
     WARNING: No swap limit support
 
-## Clone ImageTrove
+## ImageTrove
+
+Clone the imagetrove and MyTARDIS repositories:
 
     git clone https://github.com/carlohamalainen/imagetrove
     cd imagetrove
