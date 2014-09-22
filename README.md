@@ -4,7 +4,20 @@ ImageTrove! Powered by MyTARDIS.
 
 ## Architecture
 
-    TODO
+ImageTrove is a tool for ingesting and archiving NIF datasets. It is made up of a number of components:
+
+* PostgreSQL database.
+* Web front end: [MyTARDIS](http://mytardis.org/), written in [Django](https://www.djangoproject.com/).
+* DICOM server: [Orthanc](http://orthanc-server.com/)
+* Dataset uploader: [imagetrove-uploader](https://github.com/carlohamalainen/imagetrove)
+* Federated authentication: end users log in to MyTARDIS using their institutional identity, which is verified by
+  the Australian Access Federation's [Rapid Connect](https://rapid.aaf.edu.au) service.
+
+The flow of data through the system is as follows:
+
+1. Instrument user chooses a dataset to archive.
+2. At the instrument console, the user sends the dataset to the ImageTrove modality (this is the Orthanc server).
+3. Periodically, imagetrove-uploader scans the Orthanc DICOM server for new datasets which are converted to [http://www.bic.mni.mcgill.ca/ServicesSoftware/MINC](MINC) and imported into MyTARDIS, along with metadata.
 
 # Installation
 
@@ -45,8 +58,7 @@ check if AUFS is enabled by looking at the ```Storage Driver``` field:
 
 ### Local settings
 
-Look for ```CHANGEME``` in ```create_admin.py```,
-```postgresql_first_run.sh```, and ```settings.py```.
+Look for ```CHANGEME``` in ```create_admin.py```, ```postgresql_first_run.sh```, ```settings.py```, and ```imagetrove_uploader.conf```.
 
 ### AAF authentication
 
@@ -58,11 +70,11 @@ TODO Configuration of SSL certificates in the container.
 
 The callback URL is at ```/rc```, so in the test federation use
 
-    RAPID_CONNECT_CONFIG['aud'] = 'http://example.com/rc/'
+    RAPID_CONNECT_CONFIG['aud'] = 'http://imagetrove.example.com/rc/'
 
 and in production,
 
-    RAPID_CONNECT_CONFIG['aud'] = 'https://example.com/rc/'
+    RAPID_CONNECT_CONFIG['aud'] = 'https://imagetrove.example.com/rc/'
 
 ### SSH access
 
@@ -76,6 +88,8 @@ easier connection to the container:
 ## Build the ImageTrove container
 
     sudo docker build -t='user/imagetrove' .
+
+FIXME add wget of imagetrove-uploader binary
 
 ## Configure volumes
 
@@ -92,14 +106,24 @@ Ideally ```mytardis_staging```, ```mytardis_store```, and
 
 ## Configure DICOM modalities
 
-On your instrument, add the ImageTrove DICOM modality,
-which is a ```STORESCP``` server.  For example, to
-configure [Orthanc](http://orthanc-server.com/) add this to ```Configuration.json```:
+Each instrument must be specified in ```imagetrove_uploader.conf```. See FIXME for an example.
 
-    // The list of the known DICOM modalities
-    "DicomModalities" : {
-    "ImageTrove" : [ "STORESCP", "imagetrove.example.com", 4242 ]
-    },
+The fields in each instrument block are:
+
+* ```instrument```: list of name/value pairs used to identify a DICOM dataset as belonging to this instrument.
+* ```experiment_title```: list of DICOM fields that will be used to construct the experiment title for the corresponding MyTARDIS experiment.
+* ```dataset_title```: list of DICOM fields that will be used to construct the dataset name for the corresponding MyTARDIS dataset.
+* ```default_institution_name```: institution name to be used if the DICOM field ```InstitutionName``` is missing.
+* ```default_institutional_department_name```:  department name to be uesd if the DICOM field ```InstitutionalDepartmentName``` is missing.
+* ```default_institutional_address```: institutional address to be used if the DICOM field ```InstitutionAddress``` is missing.
+* ```schema_experiment```: URL-style identifier for the MyTARDIS experiment schema, e.g. ```http://cai.edu.au/schema/1```
+* ```schema_dataset```:    URL-style identifier for the MyTARDIS dataset schema, e.g. ```http://cai.edu.au/schema/2```
+* ```schema_file```:       URL-style identifier for the MyTARDIS file schema, e.g. ```http://cai.edu.au/schema/3```
+
+Correspondingly, each instrument needs to know the address of the
+ImageTrove DICOM server, which is a ```STORESCP``` server. By
+default this will be ```imagetrove.example.com:4242``` where ```imagetrove.example.com```
+is the main ImageTrove instance.
 
 # Running ImageTrove
 
@@ -143,6 +167,22 @@ If you use ```$HOME/.ssh/config``` then this entry may be useful:
 which lets one connect simply with
 
     ssh imagetrove-container
+
+# Testing
+
+## Log in: admin
+
+    TODO
+
+## Log in: AAF
+
+    TODO
+
+## Push dataset to ImageTrove
+
+    TODO
+
+## Check ingested dataset
 
 # TODO
 

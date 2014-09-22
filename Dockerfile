@@ -139,6 +139,10 @@ RUN         cmake -DALLOW_DOWNLOADS=ON \
                   /opt/Orthanc-0.8.0
 RUN         make
 
+# FIXME wget the imagetrove-uploader binary
+# FIXME add imagetrove_uploader.conf
+# FIXME add supervisor lines for imagetrove_uploader
+
 VOLUME ["/data", "/var/log", "/mytardis_store", "/mytardis_staging", "/OrthancStorage"]
 
 EXPOSE 22
