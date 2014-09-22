@@ -9,6 +9,8 @@ ImageTrove is a tool for ingesting and archiving NIF datasets. It is made up of 
 * Federated authentication: end users log in to MyTARDIS using their institutional identity, which is verified by
   the Australian Access Federation's [Rapid Connect](https://rapid.aaf.edu.au) service.
 
+For ease of deployment, all of the components are packaged into a [Docker](https://www.docker.com/) container.
+
 The flow of data through the system is as follows:
 
 1. Instrument user chooses a dataset to archive.
