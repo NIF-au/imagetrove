@@ -1,9 +1,5 @@
 # ImageTrove
 
-ImageTrove! Powered by MyTARDIS.
-
-## Architecture
-
 ImageTrove is a tool for ingesting and archiving NIF datasets. It is made up of a number of components:
 
 * PostgreSQL database.
