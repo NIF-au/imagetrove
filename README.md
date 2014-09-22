@@ -85,7 +85,7 @@ easier connection to the container:
     cat ~/.ssh/id_rsa.pub > authorized_keys
     chmod 600 authorized_keys
 
-## DICOM modalities
+### DICOM modalities
 
 Each instrument must be specified in [imagetrove_uploader.conf](imagetrove_uploader.conf).
 
@@ -106,12 +106,12 @@ ImageTrove DICOM server, which is a ```STORESCP``` server. By
 default this will be ```imagetrove.example.com:4242``` where ```imagetrove.example.com```
 is the main ImageTrove instance.
 
-## Network access
+### Network access
 
 Each instrument's DICOM server needs to be able to connect to the
 ImageTrove STORESCP server on port 4242.
 
-## Securing Orthanc
+### Securing Orthanc
 
 TODO Add password access to web UI.
 
