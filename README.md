@@ -75,7 +75,7 @@ configure [Orthanc](http://orthanc-server.com/) add this to ```Configuration.jso
 
     // The list of the known DICOM modalities
     "DicomModalities" : {
-    "ImageTrove" : [ "STORESCP", "imagetrove.example.com", 5000 ]
+    "ImageTrove" : [ "STORESCP", "imagetrove.example.com", 4242 ]
     },
 
 # Running ImageTrove
@@ -93,7 +93,8 @@ Run the container:
     sudo docker run -i -t --rm                              \
         -p 0.0.0.0:3022:22                                  \
         -p 0.0.0.0:8000:8000                                \
-        -p 0.0.0.0:5000:5000                                \
+        -p 0.0.0.0:8042:8042                                \
+        -p 0.0.0.0:4242:4242                                \
         -v /somewhere/mytardis_staging:/mytardis_staging    \
         -v /somewhere/mytardis_store:/mytardis_store        \
         -v /somewhere/data:/data                            \
