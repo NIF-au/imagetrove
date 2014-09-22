@@ -19,7 +19,8 @@ RUN apt-get -y install python python-dev libpq-dev libssl-dev libsasl2-dev   \
        	       	         uuid-dev libcurl4-openssl-dev liblua5.1-0-dev         \
        	       	         libgoogle-glog-dev libgtest-dev libpng-dev            \
        	       	         libsqlite3-dev libssl-dev zlib1g-dev libdcmtk2-dev    \
-                         libboost-all-dev libwrap0-dev libjsoncpp-dev
+                         libboost-all-dev libwrap0-dev libjsoncpp-dev wget     \
+                         graphviz graphviz-dev python-pygraphviz pkg-config
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql postgresql-contrib
 
@@ -139,8 +140,12 @@ RUN         cmake -DALLOW_DOWNLOADS=ON \
                   /opt/Orthanc-0.8.0
 RUN         make
 
-# FIXME wget the imagetrove-uploader binary
-# FIXME add imagetrove_uploader.conf
+# FIXME Move to CAI server. And package into a Deb file.
+RUN mkdir /opt/imagetrove-uploader
+RUN wget --no-cache --quiet http://carlo-hamalainen.net/tmp/imagetrove-uploader/imagetrove-uploader -O /opt/imagetrove-uploader/imagetrove-uploader
+RUN chmod +x /opt/imagetrove-uploader/imagetrove-uploader
+ADD imagetrove_uploader.conf /opt/imagetrove-uploader/
+
 # FIXME add supervisor lines for imagetrove_uploader
 
 VOLUME ["/data", "/var/log", "/mytardis_store", "/mytardis_staging", "/OrthancStorage"]
