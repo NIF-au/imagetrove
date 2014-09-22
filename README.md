@@ -13,7 +13,7 @@ The flow of data through the system is as follows:
 
 1. Instrument user chooses a dataset to archive.
 2. At the instrument console, the user sends the dataset to the ImageTrove modality (this is the Orthanc server).
-3. Periodically, imagetrove-uploader scans the Orthanc DICOM server for new datasets which are converted to [http://www.bic.mni.mcgill.ca/ServicesSoftware/MINC](MINC) and imported into MyTARDIS, along with metadata.
+3. Periodically, imagetrove-uploader scans the Orthanc DICOM server for new datasets which are converted to [MINC](http://www.bic.mni.mcgill.ca/ServicesSoftware/MINC) and imported into MyTARDIS, along with metadata.
 
 # Installation
 
