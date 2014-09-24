@@ -22,9 +22,9 @@ Alternatively, DICOM and other files can be imported via a file system, e.g. SAM
 # System requirements
 
 * A 64bit Linux system with sufficient storage for the
-datasets. For example a [http://nectar.org.au/](Nectar VM) with an
-[https://www.rdsi.edu.au/](RDSI) storage allocation mounted as NFS. Any
-distribution of Linux is acceptable as long as there is a [https://docs.docker.com/installation/#installation](Docker package).
+datasets. For example a [Nectar VM](http://nectar.org.au/) with an
+[RDSI](https://www.rdsi.edu.au/) storage allocation mounted as NFS. Any
+distribution of Linux is acceptable as long as there is a [Docker package](https://docs.docker.com/installation/#installation).
 * Each instrument's DICOM server must be able to connect to the ImageTrove instance on port 4242.
 * Alternatively, each file system mount (containing DICOM and other instrument files) must be mountable over the network on the ImageTrove instance.
 * The ImageTrove web server must be able to accept a HTTPS POST request from an AAF system.
