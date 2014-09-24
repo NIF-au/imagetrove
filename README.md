@@ -17,6 +17,17 @@ The flow of data through the system is as follows:
 2. At the instrument console, the user sends the dataset to the ImageTrove modality (this is the Orthanc server).
 3. Periodically, imagetrove-uploader scans the Orthanc DICOM server for new datasets which are converted to [MINC](http://www.bic.mni.mcgill.ca/ServicesSoftware/MINC) and imported into MyTARDIS, along with metadata.
 
+Alternatively, DICOM and other files can be imported via a file system, e.g. SAMBA share.
+
+# System requirements
+
+* A 64bit Linux system with sufficient storage for the
+datasets. For example a [http://nectar.org.au/](Nectar) VM with an
+[https://www.rdsi.edu.au/](RDSI) storage allocation mounted as NFS. Any
+distribution of Linux is acceptable as long as there is a [https://docs.docker.com/installation/#installation](Docker package).
+* Each instrument's DICOM server must be able to connect to the ImageTrove instance on port 4242.
+* Alternatively, each file system mount (containing DICOM and other instrument files) must be mountable over the network on the ImageTrove instance.
+
 # Installation
 
 ## Docker
