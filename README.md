@@ -131,8 +131,6 @@ TODO Add password access to web UI.
 
     sudo docker build -t='user/imagetrove' .
 
-FIXME add wget of imagetrove-uploader binary
-
 ## Configure volumes
 
 The container uses external volumes for persistent storage.
