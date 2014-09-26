@@ -56,6 +56,7 @@ check if AUFS is enabled by looking at the ```Storage Driver``` field:
     WARNING: No memory limit support
     WARNING: No swap limit support
 
+You might need to install the kernel package ```linux-image-extra-`uname -r` ``` for AUFS to work.
 ## ImageTrove
 
 Clone the imagetrove and MyTARDIS repositories:
