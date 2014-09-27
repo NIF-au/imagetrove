@@ -9,6 +9,9 @@ while [[ ! -e /run/postgresql/9.4-main.pid ]] ; do
     inotifywait -q -e create /run/postgresql/ >> /dev/null
 done
 
+echo "[run] create role"
+./create_role.sh
+
 echo "[run] createdb tardis"
 setuidgid postgres createdb tardis || echo 'tardis database already exists'
 

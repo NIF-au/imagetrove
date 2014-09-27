@@ -112,6 +112,7 @@ ADD         run_mytardis.sh         /opt/mytardis/
 ADD         run_celery.sh           /opt/mytardis/
 ADD         create_admin.py         /opt/mytardis/
 ADD         append_django_paths.py  /opt/mytardis/
+ADD         create_role.sh          /opt/mytardis/
 
 WORKDIR     /opt/mytardis
 RUN         ln -s bin/django djangosettings.py
@@ -141,17 +142,16 @@ RUN         cmake -DALLOW_DOWNLOADS=ON \
 RUN         make
 
 # FIXME Move to CAI server. And package into a Deb file.
-RUN mkdir /opt/imagetrove-uploader
-RUN wget --no-cache --quiet http://carlo-hamalainen.net/tmp/imagetrove-uploader/imagetrove-uploader -O /opt/imagetrove-uploader/imagetrove-uploader
-RUN chmod +x /opt/imagetrove-uploader/imagetrove-uploader
-ADD imagetrove_uploader.conf /opt/imagetrove-uploader/
+#RUN mkdir /opt/imagetrove-uploader
+#RUN wget --no-cache --quiet http://carlo-hamalainen.net/tmp/imagetrove-uploader/imagetrove-uploader -O /opt/imagetrove-uploader/imagetrove-uploader
+#RUN chmod +x /opt/imagetrove-uploader/imagetrove-uploader
+#ADD imagetrove_uploader.conf /opt/imagetrove-uploader/
 
 # FIXME add supervisor lines for imagetrove_uploader
 
 VOLUME ["/data", "/var/log", "/mytardis_store", "/mytardis_staging", "/OrthancStorage"]
 
 EXPOSE 22
-EXPOSE 5000
 EXPOSE 8000
 
 EXPOSE 8042

@@ -2,8 +2,8 @@
 
 # Adapted from https://raw.githubusercontent.com/Painted-Fox/docker-postgresql/master/scripts/first_run.sh
 
-USER=${USER:-admin}
-PASS=admin_CHANGEME # ${PASS:-$(pwgen -s -1 16)}
+USER=admin
+PASS=admin_CHANGEME
 
 pre_start_action() {
   # Echo out info to later obtain by looking at /var/log/supervisor/postgres.log
