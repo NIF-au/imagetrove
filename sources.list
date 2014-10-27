@@ -1,8 +1,18 @@
-deb http://ftp.se.debian.org/debian testing main contrib non-free
-deb-src http://ftp.se.debian.org/debian testing main contrib non-free
+deb http://mirror.aarnet.edu.au/debian testing main contrib non-free
+deb-src http://mirror.aarnet.edu.au/debian testing main contrib non-free
 
 deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free
 deb-src http://ftp.debian.org/debian/ jessie-updates main contrib non-free
 
 deb http://security.debian.org/ jessie/updates main contrib non-free
 deb-src http://security.debian.org/ jessie/updates main contrib non-free
+
+# deb http://ftp.au.debian.org/debian testing main contrib non-free
+# deb-src http://ftp.au.debian.org/debian testing main contrib non-free
+
+# deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free
+# deb-src http://ftp.debian.org/debian/ jessie-updates main contrib non-free
+
+# deb http://security.debian.org/ jessie/updates main contrib non-free
+# deb-src http://security.debian.org/ jessie/updates main contrib non-free
+

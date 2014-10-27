@@ -20,7 +20,8 @@ RUN apt-get -y install python python-dev libpq-dev libssl-dev libsasl2-dev   \
        	       	         libgoogle-glog-dev libgtest-dev libpng-dev            \
        	       	         libsqlite3-dev libssl-dev zlib1g-dev libdcmtk2-dev    \
                          libboost-all-dev libwrap0-dev libjsoncpp-dev wget     \
-                         graphviz graphviz-dev python-pygraphviz pkg-config
+                         graphviz graphviz-dev python-pygraphviz pkg-config    \
+                         libpugixml-dev
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql postgresql-contrib
 
@@ -32,6 +33,7 @@ RUN pip install PyCrypto
 RUN pip install pwgen
 
 # Locale needs to be right for various Haskell packages.
+RUN echo 'export LANG=en_AU.UTF-8' >> /root/.bashrc
 RUN sed -i 's/# en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/g' /etc/locale.gen
 RUN locale-gen
 
@@ -125,7 +127,7 @@ RUN         ln -s /mytardis_staging/ /opt/mytardis/var/staging
 
 RUN mkdir /mytardis_store /mytardis_staging
 
-ADD         Orthanc-0.8.0.tar.gz /opt/
+ADD         Orthanc-0.8.4.tar.gz /opt/
 
 RUN         mkdir /opt/orthanc
 WORKDIR     /opt/orthanc
@@ -138,7 +140,7 @@ RUN         cmake -DALLOW_DOWNLOADS=ON \
                   -DUSE_GTEST_DEBIAN_SOURCE_PACKAGE=ON \
                   -DENABLE_JPEG=OFF \
                   -DENABLE_JPEG_LOSSLESS=OFF \
-                  /opt/Orthanc-0.8.0
+                  /opt/Orthanc-0.8.4
 RUN         make
 
 # FIXME Move to CAI server. And package into a Deb file.

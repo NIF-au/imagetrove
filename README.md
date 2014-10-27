@@ -200,6 +200,13 @@ which lets one connect simply with
 
 ## Push dataset to ImageTrove
 
+For testing, manually push some DICOM files to the local Orthanc server:
+
+    sudo apt-get install python-httplib2
+    ./import_into_orthanc.py localhost 8042 /path/to/dicom/files
+
+Check the files in Orthanc's web interface, which runs at http://localhost:8042
+
     TODO
 
 ## Check ingested dataset
@@ -212,7 +219,7 @@ which lets one connect simply with
 
 # TODO
 
-* Required DICOM fields
+* Required DICOM fields - list from Orthanc docs.
 * File mount ingestion
 * Configure ingestion application
 * Apache or Nginx instead of django-runserver.
