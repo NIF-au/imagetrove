@@ -5,6 +5,7 @@ sudo docker run -i -t --rm                              \
         -p 0.0.0.0:4243:4242                                \
         -v /data/Q0107/imagetrove0_dev_volumes/mytardis_staging:/mytardis_staging    \
         -v /data/Q0107/imagetrove0_dev_volumes/mytardis_store:/mytardis_store        \
+        -v /data/Q0107/imagetrove0_dev_volumes/imagetrove:/imagetrove                \
         -v /data/Q0107/imagetrove0_dev_volumes/data:/data                            \
         -v /data/Q0107/imagetrove0_dev_volumes/var_log:/var/log                      \
         -v /data/Q0107/imagetrove0_dev_volumes/OrthancStorage:/OrthancStorage        \

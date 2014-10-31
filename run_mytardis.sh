@@ -25,5 +25,8 @@ echo "[run] syncdb"
 echo "[run] create_admin.py"
 python create_admin.py
 
+echo "[run] create_location.py"
+python create_location.py
+
 echo "[run] runserver"
 ./bin/django runserver 0.0.0.0:8000

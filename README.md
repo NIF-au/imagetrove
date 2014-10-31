@@ -136,20 +136,22 @@ TODO Add password access to web UI.
 
 The container uses external volumes for persistent storage.
 
+* ```imagetrove```: our shared storage location with MyTARDIS.
 * ```mytardis_staging```: the MyTARDIS staging directory.
 * ```mytardis_store```: the final place that MyTARDIS stores data.
 * ```data```: postgresql database files.
 * ```var_log```: logfiles for supervisord, postgresql, mytardis, etc.
 * ```OrthancStorage```: storage for the Orthanc DICOM server.
 
-Ideally ```mytardis_staging```, ```mytardis_store```, and
-```OrthancStorage``` would be on the same file system.
+Ideally ```imagetrove``` and ```OrthancStorage``` would be on the
+same file system.
 
 # Running ImageTrove
 
 Create directories for the persistent storage:
 
-    mkdir -p /somewhere/mytardis_staging    \
+    mkdir -p /somewhere/imagetrove          \
+             /somewhere/mytardis_staging    \
              /somewhere/mytardis_store      \
              /somewhere/data                \
              /somewhere/var_log/supervisor  \
@@ -162,6 +164,7 @@ Run the container:
         -p 0.0.0.0:8000:8000                                \
         -p 0.0.0.0:8042:8042                                \
         -p 0.0.0.0:4242:4242                                \
+        -v /somewhere/imagetrove:/imagetrove                \
         -v /somewhere/mytardis_staging:/mytardis_staging    \
         -v /somewhere/mytardis_store:/mytardis_store        \
         -v /somewhere/data:/data                            \

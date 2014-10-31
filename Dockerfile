@@ -113,6 +113,8 @@ ADD         settings.py             /opt/mytardis/tardis/
 ADD         run_mytardis.sh         /opt/mytardis/
 ADD         run_celery.sh           /opt/mytardis/
 ADD         create_admin.py         /opt/mytardis/
+ADD         create_location.py      /opt/mytardis/
+ADD         wipe_db.py              /opt/mytardis/
 ADD         append_django_paths.py  /opt/mytardis/
 ADD         create_role.sh          /opt/mytardis/
 
@@ -151,7 +153,7 @@ RUN         make
 
 # FIXME add supervisor lines for imagetrove_uploader
 
-VOLUME ["/data", "/var/log", "/mytardis_store", "/mytardis_staging", "/OrthancStorage"]
+VOLUME ["/data", "/var/log", "/imagetrive", "/mytardis_store", "/mytardis_staging", "/OrthancStorage"]
 
 EXPOSE 22
 EXPOSE 8000
