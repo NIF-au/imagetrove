@@ -64,8 +64,6 @@ Clone the imagetrove and MyTARDIS repositories:
     git clone https://github.com/carlohamalainen/imagetrove
     cd imagetrove
     git clone git://github.com/carlohamalainen/mytardis.git # current dev fork; later will be git://github.com/mytardis/mytardis.git
-    cd mytardis
-    cd ..
 
 ## Configuration
 
