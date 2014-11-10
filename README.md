@@ -218,6 +218,11 @@ Check the files in Orthanc's web interface, which runs at http://localhost:8042
 
     TODO
 
+# Data flow
+
+* Define interaction of user-ACL utility and pre-existing projects:
+experiment imported before project has been defined?
+
 # TODO
 
 * Required DICOM fields - list from Orthanc docs.
