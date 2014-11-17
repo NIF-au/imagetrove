@@ -124,6 +124,26 @@ ImageTrove STORESCP server on port 4242.
 
 ### Securing Orthanc
 
+To secure DICOM transmission from an instrument to Orthanc,
+use [stunnel](https://www.stunnel.org/index.html). The Docker container
+has stunnel configured to pass SSL traffic from port 5242 to the unencrypted
+local port 4242. If you use this option, you should not expose port
+4242 when running Docker (i.e. drop the port specification
+```-p 0.0.0.0:4242:4242``` from the ```docker run``` command).
+
+On the instrument's DICOM server, install stunnel in client mode by editing
+```/etc/stunnel/stunnel.conf``` as follows:
+
+    client = yes
+
+    [dicom]
+    accept = localhost:4242
+    connect = {ip}:5242
+
+where ```{ip}``` is the IP address of the ImageTrove
+instance. Configure the instrument's DICOM server to connect to port
+4242 on the machine running stunnel.
+
 TODO Add password access to web UI.
 
 ## Build the ImageTrove container
@@ -162,6 +182,7 @@ Run the container:
         -p 0.0.0.0:8000:8000                                \
         -p 0.0.0.0:8042:8042                                \
         -p 0.0.0.0:4242:4242                                \
+        -p 0.0.0.0:5242:5242                                \
         -v /somewhere/imagetrove:/imagetrove                \
         -v /somewhere/mytardis_staging:/mytardis_staging    \
         -v /somewhere/mytardis_store:/mytardis_store        \
