@@ -21,9 +21,15 @@ RUN apt-get -y install python python-dev libpq-dev libssl-dev libsasl2-dev   \
        	       	         libsqlite3-dev libssl-dev zlib1g-dev libdcmtk2-dev    \
                          libboost-all-dev libwrap0-dev libjsoncpp-dev wget     \
                          graphviz graphviz-dev python-pygraphviz pkg-config    \
-                         libpugixml-dev
+                         libpugixml-dev stunnel
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql postgresql-contrib
+
+# Stunnel certificate and configuration.
+ADD openssl_cmd_input.txt /root/
+RUN cat /root/openssl_cmd_input.txt | openssl req -new -nodes -x509 -out /etc/stunnel/stunnel.pem -keyout /etc/stunnel/stunnel.pem
+RUN sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
+ADD stunnel.conf /etc/stunnel/stunnel.conf
 
 # Python packages.
 RUN pip install pydicom
@@ -160,6 +166,7 @@ EXPOSE 8000
 
 EXPOSE 8042
 EXPOSE 4242
+EXPOSE 5242
 
 RUN mkdir /scratch
 VOLUME "/scratch"
