@@ -87,14 +87,17 @@ and in production,
 
     RAPID_CONNECT_CONFIG['aud'] = 'https://imagetrove.example.com/rc/'
 
-### SSH access
+### Shell access
 
-Place your ssh public key in the file authorized_keys if you want
-easier connection to the container:
+To get a shell in a running container, use ```docker exec```:
 
-    # In the imagetrove directory...
-    cat ~/.ssh/id_rsa.pub > authorized_keys
-    chmod 600 authorized_keys
+    sudo docker exec -it <hash> bash
+
+where ```<hash>``` is the value in the first column of output given by ```docker ps```.
+
+Alternatively, do it in one line with:
+
+    sudo docker exec -it `sudo docker ps | grep 'user/imagetrove:latest' | awk '{print $1}'` bash
 
 ### DICOM modalities
 
@@ -192,23 +195,6 @@ Run the container:
         -P user/imagetrove
 
 Now go to http://localhost:8000 and you should see the default MyTARDIS front page.
-
-To ssh to the container:
-
-    ssh -t -o NoHostAuthenticationForLocalhost=yes -p 3022 root@localhost
-
-If you use ```$HOME/.ssh/config``` then this entry may be useful:
-
-    Host imagetrove-container
-        Hostname localhost
-        Port 3022
-        User root
-        NoHostAuthenticationForLocalhost yes
-        RequestTTY yes
-
-which lets one connect simply with
-
-    ssh imagetrove-container
 
 # Testing
 

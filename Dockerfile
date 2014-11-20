@@ -8,7 +8,7 @@ RUN apt-get -y dist-upgrade
 RUN apt-get -y install python python-dev libpq-dev libssl-dev libsasl2-dev   \
                          libldap2-dev libxslt1.1 libxslt1-dev python-libxslt1  \
                          libexiv2-dev git libgraphviz-dev git ipython screen   \
-                         htop imagemagick vim dcmtk openssh-server supervisor  \
+                         htop imagemagick vim dcmtk supervisor  \
                          pwgen libpq-dev python-dev python-software-properties \
                          software-properties-common python-psycopg2 pyflakes   \
                          tcsh make vim-gtk minc-tools python-pip               \
@@ -21,7 +21,7 @@ RUN apt-get -y install python python-dev libpq-dev libssl-dev libsasl2-dev   \
        	       	         libsqlite3-dev libssl-dev zlib1g-dev libdcmtk2-dev    \
                          libboost-all-dev libwrap0-dev libjsoncpp-dev wget     \
                          graphviz graphviz-dev python-pygraphviz pkg-config    \
-                         libpugixml-dev stunnel
+                         libpugixml-dev stunnel telnet
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql postgresql-contrib
 
@@ -70,23 +70,6 @@ RUN     make
 # Sane bash settings.
 ADD bashrc-extra /root/.bashrc-extra
 RUN echo 'source /root/.bashrc-extra' >> /root/.bashrc
-
-# SSH access using the authorized_keys file (not in the git repo).
-RUN mkdir /root/.ssh
-ADD authorized_keys /root/.ssh/
-RUN chmod 700 /root/.ssh
-RUN chmod 600 /root/.ssh/authorized_keys
-
-# SSH daemon needs host keys to be generated.
-RUN mkdir -p  /var/run/sshd
-RUN chmod -rx /var/run/sshd
-RUN rm -f /etc/ssh/ssh_host_rsa_key
-RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
-
-# Disable PAM otherwise we get logged out immediately.
-# http://stackoverflow.com/questions/18173889/cannot-access-centos-sshd-on-docker
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
-RUN sed -ri 's/#UsePAM no/UsePAM no/g'   /etc/ssh/sshd_config
 
 # Set up the postgresql admin user with password admin.
 RUN mkdir /data
@@ -159,9 +142,8 @@ RUN         make
 
 # FIXME add supervisor lines for imagetrove_uploader
 
-VOLUME ["/data", "/var/log", "/imagetrive", "/mytardis_store", "/mytardis_staging", "/OrthancStorage"]
+VOLUME ["/data", "/var/log", "/imagetrove", "/mytardis_store", "/mytardis_staging", "/OrthancStorage"]
 
-EXPOSE 22
 EXPOSE 8000
 
 EXPOSE 8042
@@ -172,6 +154,3 @@ RUN mkdir /scratch
 VOLUME "/scratch"
 
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
-
-# For testing, just load ssh.
-#CMD         /usr/sbin/sshd -D
