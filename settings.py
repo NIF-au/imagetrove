@@ -25,6 +25,9 @@ FILE_STORE_PATH = '/mytardis_store'
 STAGING_PATH    = '/mytardis_staging'
 SYNC_TEMP_PATH = '/opt/mytardis/var/staging/'
 
+# https://github.com/madssj/django-longer-username-and-email
+INSTALLED_APPS = ('longerusernameandemail',) + INSTALLED_APPS
+
 # Disable user registration as we use AAF.
 INSTALLED_APPS = tuple([x for x in INSTALLED_APPS if x != 'registration'])
 
