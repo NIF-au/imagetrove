@@ -22,6 +22,9 @@ echo "[run] syncdb"
 ./bin/django schemamigration tardis_portal --auto || echo 'schemamigration failed, ignoring'
 ./bin/django migrate tardis_portal || echo 'migrate tardis_portal failed, ignoring'
 
+echo "[run] migrate for longer email and usernames"
+./bin/django migrate longerusernameandemail
+
 echo "[run] create_admin.py"
 python create_admin.py
 
