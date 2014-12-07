@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo docker run -i -t --rm                  \
+docker run -i -t --rm                  \
         -p 0.0.0.0:8001:8000                                \
         -p 0.0.0.0:8444:8443                                \
         -p 0.0.0.0:8043:8042                                \
