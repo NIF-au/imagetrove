@@ -1,1 +1,1 @@
-sudo docker build -t=user/imagetrove-store-dev .
+docker build -t=user/imagetrove-store-dev .
