@@ -16,7 +16,7 @@ echo "[run] createdb tardis"
 setuidgid postgres createdb tardis || echo 'tardis database already exists'
 
 echo "[run] syncdb"
-./bin/django syncdb --noinput --migrate
+./bin/django syncdb --noinput
 
 ./bin/django migrate || echo 'migrate failed, ignoring'
 ./bin/django schemamigration tardis_portal --auto || echo 'schemamigration failed, ignoring'
