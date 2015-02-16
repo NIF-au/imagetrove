@@ -196,15 +196,23 @@ Run the container:
 
 Now go to http://localhost:8000 and you should see the default MyTARDIS front page.
 
+# Scheduling ingestion
+
+TODO
+
 # Testing
 
 ## Log in: admin
 
-    TODO
+The MyTARDIS login button directs to AAF. To log in as the
+local admin user visit [http://localhost:8000/local_local](http://localhost:8000/local_local).
+
+This also gives you access to the Django admin interface.
 
 ## Log in: AAF
 
-    TODO
+Click the blue Log in button. You will be redirected to your
+institution's authentication page, and then back to MyTARDIS.
 
 ## Push dataset to ImageTrove
 
@@ -214,8 +222,6 @@ For testing, manually push some DICOM files to the local Orthanc server:
     ./import_into_orthanc.py localhost 8042 /path/to/dicom/files
 
 Check the files in Orthanc's web interface, which runs at http://localhost:8042
-
-    TODO
 
 ## Check ingested dataset
 
