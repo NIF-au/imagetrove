@@ -30,7 +30,7 @@ INSTALLED_APPS = ('longerusernameandemail',) + INSTALLED_APPS
 
 # https://github.com/django-pci/django-axes
 INSTALLED_APPS = ('axes',) + INSTALLED_APPS
-MIDDLEWARE_CLASSES = tuple(MIDDLEWARE_CLASSES + 'axes.middleware.FailedLoginMiddleware')
+MIDDLEWARE_CLASSES = tuple(MIDDLEWARE_CLASSES + ('axes.middleware.FailedLoginMiddleware',))
 
 # Disable user registration as we use AAF.
 INSTALLED_APPS = tuple([x for x in INSTALLED_APPS if x != 'registration'])
