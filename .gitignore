@@ -80,3 +80,11 @@ develop/dicom_tmp
 develop/var_log
 develop/scratch/*
 develop/*.swp
+
+3.5/data
+develop/data
+
+
+
+3.5/vim/bundle/ghcmod-vim/test/data/*
+
