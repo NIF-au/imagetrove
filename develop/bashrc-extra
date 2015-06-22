@@ -1,0 +1,10 @@
+alias ls='ls --color=auto'
+alias d='ls -lh'
+
+export EDITOR=vim
+
+# All history forever! Sort of!
+export HISTSIZE=20000
+shopt -s histappend
+export HISTTIMEFORMAT="%F %T "
+export PROMPT_COMMAND='history -a'

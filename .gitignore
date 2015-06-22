@@ -88,3 +88,6 @@ develop/data
 
 3.5/vim/bundle/ghcmod-vim/test/data/*
 
+
+develop/mytardis-develop/*
+develop/mytardis-plugin-imagetrove/*
