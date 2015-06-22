@@ -4,8 +4,8 @@ ImageTrove is a tool for ingesting and archiving NIF datasets. It is made up of 
 
 * PostgreSQL database.
 * Web front end: [MyTARDIS](http://mytardis.org/), a [Django](https://www.djangoproject.com/) application.
-* DICOM server: [Orthanc](http://orthanc-server.com/).
-* Dataset uploader: [imagetrove-uploader](https://github.com/carlohamalainen/imagetrove).
+* DICOM server: [DICOM](http://dicom.offis.de/dcmtk.php.en).
+* Dataset uploader: [imagetrove-uploader](https://github.com/carlohamalainen/imagetrove-uploader).
 * Federated authentication: end users log in to MyTARDIS using their institutional identity, which is verified by
   the Australian Access Federation's [Rapid Connect](https://rapid.aaf.edu.au) service.
 
@@ -14,10 +14,8 @@ For ease of deployment, all of the components are packaged into a [Docker](https
 The flow of data through the system is as follows:
 
 1. Instrument user chooses a dataset to archive.
-2. At the instrument console, the user sends the dataset to the ImageTrove modality (this is the Orthanc server).
-3. Periodically, imagetrove-uploader scans the Orthanc DICOM server for new datasets which are converted to [MINC](http://www.bic.mni.mcgill.ca/ServicesSoftware/MINC) and imported into MyTARDIS, along with metadata.
-
-Alternatively, DICOM and other files can be imported via a file system, e.g. SAMBA share.
+2. At the instrument console, the user sends the dataset to the ImageTrove modality (this is the DCMTK server).
+3. Periodically, imagetrove-uploader scans the DCMTK storage directory for new datasets which are converted to [MINC](http://www.bic.mni.mcgill.ca/ServicesSoftware/MINC) and Nifti and imported into MyTARDIS, along with metadata.
 
 # System requirements
 
@@ -125,30 +123,6 @@ is the main ImageTrove instance.
 Each instrument's DICOM server needs to be able to connect to the
 ImageTrove STORESCP server on port 4242.
 
-### Securing Orthanc
-
-To secure DICOM transmission from an instrument to Orthanc,
-use [stunnel](https://www.stunnel.org/index.html). The Docker container
-has stunnel configured to pass SSL traffic from port 5242 to the unencrypted
-local port 4242. If you use this option, you should not expose port
-4242 when running Docker (i.e. drop the port specification
-```-p 0.0.0.0:4242:4242``` from the ```docker run``` command).
-
-On the instrument's DICOM server, install stunnel in client mode by editing
-```/etc/stunnel/stunnel.conf``` as follows:
-
-    client = yes
-
-    [dicom]
-    accept = localhost:4242
-    connect = {ip}:5242
-
-where ```{ip}``` is the IP address of the ImageTrove
-instance. Configure the instrument's DICOM server to connect to port
-4242 on the machine running stunnel.
-
-TODO Add password access to web UI.
-
 ## Build the ImageTrove container
 
     sudo docker build -t='user/imagetrove' .
@@ -158,40 +132,25 @@ TODO Add password access to web UI.
 The container uses external volumes for persistent storage.
 
 * ```imagetrove```: our shared storage location with MyTARDIS.
-* ```mytardis_staging```: the MyTARDIS staging directory.
-* ```mytardis_store```: the final place that MyTARDIS stores data.
 * ```data```: postgresql database files.
 * ```var_log```: logfiles for supervisord, postgresql, mytardis, etc.
-* ```OrthancStorage```: storage for the Orthanc DICOM server.
-
-Ideally ```imagetrove``` and ```OrthancStorage``` would be on the
-same file system.
 
 # Running ImageTrove
 
 Create directories for the persistent storage:
 
     mkdir -p /somewhere/imagetrove          \
-             /somewhere/mytardis_staging    \
-             /somewhere/mytardis_store      \
              /somewhere/data                \
              /somewhere/var_log/supervisor  \
-             /somewhere/OrthancStorage
+             /somewhere/var_log/nginx       \
 
 Run the container:
 
     sudo docker run -i -t --rm                              \
-        -p 0.0.0.0:3022:22                                  \
         -p 0.0.0.0:8000:8000                                \
-        -p 0.0.0.0:8042:8042                                \
-        -p 0.0.0.0:4242:4242                                \
-        -p 0.0.0.0:5242:5242                                \
         -v /somewhere/imagetrove:/imagetrove                \
-        -v /somewhere/mytardis_staging:/mytardis_staging    \
-        -v /somewhere/mytardis_store:/mytardis_store        \
         -v /somewhere/data:/data                            \
         -v /somewhere/var_log:/var/log                      \
-        -v /somewhere/OrthancStorage:/OrthancStorage        \
         -P user/imagetrove
 
 Now go to http://localhost:8000 and you should see the default MyTARDIS front page.
@@ -214,15 +173,6 @@ This also gives you access to the Django admin interface.
 Click the blue Log in button. You will be redirected to your
 institution's authentication page, and then back to MyTARDIS.
 
-## Push dataset to ImageTrove
-
-For testing, manually push some DICOM files to the local Orthanc server:
-
-    sudo apt-get install python-httplib2
-    ./import_into_orthanc.py localhost 8042 /path/to/dicom/files
-
-Check the files in Orthanc's web interface, which runs at http://localhost:8042
-
 ## Check ingested dataset
 
     TODO
@@ -238,7 +188,6 @@ experiment imported before project has been defined?
 
 # TODO
 
-* Required DICOM fields - list from Orthanc docs.
 * File mount ingestion
 * Configure ingestion application
 * Apache or Nginx instead of django-runserver.

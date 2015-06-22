@@ -1,2 +1,0 @@
-./import_into_orthanc.py localhost 8043 /data/Q0107/imagetrove_datasets/carlo_brain/CH_14_07_09-10_17_55-STD-1_3_12_2_1107_5_2_34_18975/RESEARCH_KIERAN_20140709_101928_062000/PHOENIXZIPREPORT_0099/
-./import_into_orthanc.py localhost 8043 /data/Q0107/imagetrove_datasets/carlo_brain/CH_14_07_09-10_17_55-STD-1_3_12_2_1107_5_2_34_18975/RESEARCH_KIERAN_20140709_101928_062000/MP2RAGE-WIP900_1_0ISO_7T_T1_IMAGES_0003/
