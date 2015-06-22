@@ -54,17 +54,29 @@ docs/_build/
 target/
 
 # MyTARDIS source tree
-mytardis
+3.5/mytardis
 
 # SSH authorized keys for the container
-authorized_keys
+3.5/authorized_keys
 
 # Data directories
-data
-dicom_tmp
-mytardis_staging
-mytardis_store
-var_log
-scratch/*
-OrthancStorage/*
-*.swp
+3.5/data
+3.5/dicom_tmp
+3.5/var_log
+3.5/scratch/*
+3.5/*.swp
+
+####################################################
+
+# MyTARDIS source tree
+develop/mytardis
+
+# SSH authorized keys for the container
+develop/authorized_keys
+
+# Data directories
+develop/data
+develop/dicom_tmp
+develop/var_log
+develop/scratch/*
+develop/*.swp
