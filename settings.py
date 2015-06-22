@@ -43,6 +43,9 @@ MANAGE_ACCOUNT_ENABLED = False
 # FILE_UPLOAD_TEMP_DIR and FILE_STORE_PATH will be on the same file system.
 FILE_UPLOAD_TEMP_DIR = '/tmp'
 
+# Avoid pagination for dataset files (does this affect everything?).
+API_LIMIT_PER_PAGE = 0
+
 # Show the Rapid Connect login button.
 RAPID_CONNECT_ENABLED = True
 
