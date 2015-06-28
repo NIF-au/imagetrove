@@ -3,7 +3,7 @@ from datetime import timedelta
 from os import path
 
 # MUST change this to False for any serious use.
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
 

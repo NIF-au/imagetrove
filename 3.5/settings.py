@@ -4,7 +4,7 @@ from settings_changeme import *
 # Add site specific changes here.
 
 # Turn on django debug mode.
-DEBUG = True
+DEBUG = False
 
 # Lots of output...
 import logging
