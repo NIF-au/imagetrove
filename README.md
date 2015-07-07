@@ -106,7 +106,7 @@ Alternatively, do it in one line with:
 
 ### DICOM modalities
 
-Each instrument must be specified in a config file; see [imagetrove_uploader.conf](https://github.com/NIF-au/imagetrove-uploader/blob/master/sample_config_files/CAI_all.conf) for an example.
+Each instrument must be specified in a config file; see [CAI_all.conf](https://github.com/NIF-au/imagetrove-uploader/blob/master/sample_config_files/CAI_all.conf) for an example.
 
 The fields in each instrument block are:
 
@@ -120,15 +120,18 @@ The fields in each instrument block are:
 * ```schema_dataset```:    URL-style identifier for the MyTARDIS dataset schema, e.g. ```http://cai.edu.au/schema/2```
 * ```schema_file```:       URL-style identifier for the MyTARDIS file schema, e.g. ```http://cai.edu.au/schema/3```
 
-Correspondingly, each instrument needs to know the address of the
-ImageTrove DICOM server, which is a ```STORESCP``` server. By
-default this will be ```imagetrove.example.com:4242``` where ```imagetrove.example.com```
-is the main ImageTrove instance.
+At the top level the fields are:
+
+* ```user```: MyTardis username (the admin user).
+* ```pass```: password for the admin user.
+* ```mytardis_directory```: directory to store experiment files. This is probably your big NFS share.
+* ```dcmtk_dir```: incoming directory for DCMTK's DICOM server.
+* ```tmp```: temporary directory for processing DICOM to Zip, Minc, Nifti, etc.
 
 ### Network access
 
 Each instrument's DICOM server needs to be able to connect to the
-ImageTrove STORESCP server on port 4242.
+STORESCP server on port 4242.
 
 ## Build the ImageTrove container
 
@@ -162,16 +165,12 @@ Run the container:
 
 Now go to http://localhost:8000 and you should see the default MyTARDIS front page.
 
-# Scheduling ingestion
-
-TODO
-
 # Testing
 
 ## Log in: admin
 
 The MyTARDIS login button directs to AAF. To log in as the
-local admin user visit [http://localhost:8000/local_local](http://localhost:8000/local_local).
+local admin user visit [http://localhost:8000/admin](http://localhost:8000/admin).
 
 This also gives you access to the Django admin interface.
 
@@ -179,23 +178,3 @@ This also gives you access to the Django admin interface.
 
 Click the blue Log in button. You will be redirected to your
 institution's authentication page, and then back to MyTARDIS.
-
-## Check ingested dataset
-
-    TODO
-
-## Log files
-
-    TODO
-
-# Data flow
-
-* Define interaction of user-ACL utility and pre-existing projects:
-experiment imported before project has been defined?
-
-# TODO
-
-* File mount ingestion
-* Configure ingestion application
-* Apache or Nginx instead of django-runserver.
-* How to use command line interface.
