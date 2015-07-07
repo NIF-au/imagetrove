@@ -5,7 +5,7 @@ ImageTrove is a tool for ingesting and archiving NIF datasets. It is made up of 
 * PostgreSQL database.
 * Web front end: [MyTARDIS](http://mytardis.org/), a [Django](https://www.djangoproject.com/) application.
 * DICOM server: [DICOM](http://dicom.offis.de/dcmtk.php.en).
-* Dataset uploader: [imagetrove-uploader](https://github.com/carlohamalainen/imagetrove-uploader).
+* Dataset uploader: [imagetrove-uploader](https://github.com/NIF-au/imagetrove-uploader).
 * Federated authentication: end users log in to MyTARDIS using their institutional identity, which is verified by
   the Australian Access Federation's [Rapid Connect](https://rapid.aaf.edu.au) service.
 
@@ -23,8 +23,7 @@ The flow of data through the system is as follows:
 datasets. For example a [Nectar VM](http://nectar.org.au/) with an
 [RDSI](https://www.rdsi.edu.au/) storage allocation mounted as NFS. Any
 distribution of Linux is acceptable as long as there is a [Docker package](https://docs.docker.com/installation/#installation).
-* Each instrument's DICOM server must be able to connect to the ImageTrove instance on port 4242.
-* Alternatively, each file system mount (containing DICOM and other instrument files) must be mountable over the network on the ImageTrove instance.
+* Each instrument's DICOM server must be able to connect to the DCMTK DICOM server (defaults to port 4242).
 * The ImageTrove web server must be able to accept a HTTPS POST request from an AAF system.
 
 # Installation
@@ -57,11 +56,19 @@ check if AUFS is enabled by looking at the ```Storage Driver``` field:
 You might need to install the kernel package ```linux-image-extra-`uname -r` ``` for AUFS to work.
 ## ImageTrove
 
-Clone the imagetrove and MyTARDIS repositories:
+Clone the imagetrove and MyTARDIS repositories.
 
-    git clone https://github.com/carlohamalainen/imagetrove
+For the older 3.5 release:
+
+    git clone https://github.com/NIF-au/imagetrove
     cd imagetrove
     git clone git://github.com/carlohamalainen/mytardis.git # current dev fork; later will be git://github.com/mytardis/mytardis.git
+
+For the current develop branch:
+
+    git clone https://github.com/NIF-au/imagetrove
+    cd imagetrove
+    git clone git://github.com/mytardis/mytardis.git
 
 ## Configuration
 
