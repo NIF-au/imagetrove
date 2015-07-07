@@ -106,7 +106,7 @@ Alternatively, do it in one line with:
 
 ### DICOM modalities
 
-Each instrument must be specified in [imagetrove_uploader.conf](imagetrove_uploader.conf).
+Each instrument must be specified in a config file; see [imagetrove_uploader.conf](https://github.com/NIF-au/imagetrove-uploader/blob/master/sample_config_files/CAI_all.conf) for an example.
 
 The fields in each instrument block are:
 
