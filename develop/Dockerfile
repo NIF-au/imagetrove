@@ -1,4 +1,4 @@
-FROM        carlohamalainen/imagetrove-base
+FROM        nifau/imagetrove-base
 MAINTAINER  Carlo Hamalainen <c.hamalainen@uq.edu.au>
 
 ADD sources.list /etc/apt/sources.list
