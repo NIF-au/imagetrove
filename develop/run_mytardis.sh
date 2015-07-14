@@ -25,6 +25,9 @@ echo "[run] migrate for longer email and usernames"
 echo "[run] create_admin.py"
 python create_admin.py
 
+echo "[run] collectstatic"
+echo 'yes' | ./mytardis.py collectstatic --noinput
+
 echo "[run] create_storagebox.py"
 python create_storagebox.py
 
