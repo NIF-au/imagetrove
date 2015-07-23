@@ -82,6 +82,9 @@ foreach $i (@indirs){
    
    print "$i\n" . join("\n", @outbuf) . "\n" if $opt{'verbose'};
    
+   open(FH, ">$i/subject") or die "Couldn't open $i/subject. Read only? [$!]\n";
+   print FH join("\n", @outbuf) . "\n";
+   close(FH);
    
    }
 
